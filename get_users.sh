@@ -9,13 +9,12 @@ then
               Katerini Trikala Serres Lamia Alexandroupoli Kozani Kavala Veria \
               Athina Hellas Ellada
   do
-#    for (( i=1; i<=2; i++ ))
-#    do
-      curl -s "https://api.github.com/search/users?q=repos:%3E4+location:${loca}&page=1&per_page=100" \
+    for (( i=1; i<=10; i++ ))
+    do
+      curl -s "https://api.github.com/search/users?q=repos:%3E4+location:${loca}&page=${i}&per_page=100" \
            -H "Authorization: token ${token}"
-      curl -s "https://api.github.com/search/users?q=repos:%3E4+location:${loca}&page=2&per_page=100" \
-           -H "Authorization: token ${token}"
-#    done
+    done | 
+    cat
   done |
     sed -n 's/.*"login": "\(.*\)",/\1/p' |
     sort -u > "user/users.txt"
