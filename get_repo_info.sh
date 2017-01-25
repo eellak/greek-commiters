@@ -16,9 +16,7 @@ do
         done > "user/contr/${user}.json"
     fi
 ## Get contributions sum of each user in their own repos
-    for num in $(jq "map(select(.login | contains (\"${user}\")))" \
-                  < "user/contr/${user}.json" |
-                 sed -n 's/.*"contributions": \(.*\)/\1/p')
+    for num in $(jq ".[] | select(.login == \"${user}\") | .contributions" < user/contr/${user}.json)
     do
         sum=$(( ${sum} + ${num} ))
     done
@@ -41,9 +39,7 @@ do
             done > "orgs/contr/${org}.json"
         fi
        ## Make a sum of each users contributions in each organization repo
-        for num in $(jq "map(select(.login | contains (\"${user}\")))" \
-                      < "orgs/contr/${org}.json" |
-                     sed -n 's/.*"contributions": \(.*\)/\1/p')
+        for num in $(jq ".[] | select(.login == \"${user}\") | .contributions" < orgs/contr/${org}.json)
         do
             sum=$(( ${sum} + ${num} ))
         done
