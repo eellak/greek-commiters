@@ -20,6 +20,7 @@ then
            -H "Authorization: token ${token}"
     done | 
     cat
+    sleep 1m
   done |
     sed -n 's/.*"login": "\(.*\)",/\1/p' |
     sort -u > "user/users.txt"
