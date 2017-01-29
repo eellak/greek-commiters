@@ -10,7 +10,8 @@ then
     curl -s "https://api.github.com/search/users?q=location:greece+-location:athens+-location:thessaloniki+-location:patras+-location:volos+-location:ioannina+-location:heraklion+-location:crete&page=${i}&per_page=100" \
        -H "Authorization: token ${token}"
 
-    for loca in Athens Thessaloniki Patra Irakleio Larissa Patras Volos \
+    for loca in 'Athens+-location:GA+-location:Georgia+-location:OH+-location:ohio' \
+                Thessaloniki Patra Irakleio Larissa Patras Volos \
                 Heraklion Rhodes Rodos Ioannina Chania Chalkis Chalkida Agrinio \
                 Katerini Trikala Serres Lamia Alexandroupoli Kozani Kavala Veria \
                 Athina Hellas Ellada
