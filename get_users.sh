@@ -26,13 +26,27 @@ then
     sort -u > "user/users.txt"
 fi
 
-## Get more user info from previously created list
-while read user                                                                 
-do                                                                              
+### Get more user info from previously created list
+while read user
+do
   if ! [[ -f "user/info/${user}.json" ]]
   then
-    curl -s "https://api.github.com/users/${user}" \
-         -H "Authorization: token ${token}" \
-       > "user/info/${user}.json"
+    if (( ${limit} >= 1 ))
+    then
+      curl -s "https://api.github.com/users/${user}" \
+           -H "Authorization: token ${token}" \
+         > "user/info/${user}.json"
+      limit=$(( ${limit} - 1 ))
+      else
+      until (( $(curl -s https://api.github.com/rate_limit \
+                      -H "Authorization: token ${token}" |
+                 jq '.resources.core.reamaining') >= 1 ))
+      do
+        sleep 10s
+      done
+      limit=$(curl -s https://api.github.com/rate_limit \
+                   -H "Authorization: token ${token}" |
+              jq '.resources.core.remaining')
+    fi
   fi
 done < "user/users.txt"
