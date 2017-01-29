@@ -15,9 +15,8 @@ then
                 Heraklion Rhodes Rodos Ioannina Chania Chalkis Chalkida Agrinio \
                 Katerini Trikala Serres Lamia Alexandroupoli Kozani Kavala Veria \
                 Athina Hellas Ellada
-
     do
-      curl -s "https://api.github.com/search/users?q=repos:%3E4+location:${loca}&page=${i}&per_page=100" \
+      curl -s "https://api.github.com/search/users?q=location:${loca}&page=${i}&per_page=100" \
            -H "Authorization: token ${token}"
     done | 
     cat
