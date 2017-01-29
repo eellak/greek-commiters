@@ -4,12 +4,17 @@
 
 if ! [[ -f "user/users.txt" ]]
 then
-  for loca in Greece Athens Thessaloniki Patra Irakleio Larissa Patras Volos \
-              Heraklion Rhodes Rodos Ioannina Chania Chalkis Chalkida Agrinio \
-              Katerini Trikala Serres Lamia Alexandroupoli Kozani Kavala Veria \
-              Athina Hellas Ellada
+  for (( i=1; i<=10; i++ ))
   do
-    for (( i=1; i<=10; i++ ))
+
+    curl -s "https://api.github.com/search/users?q=location:greece+-location:athens+-location:thessaloniki+-location:patras+-location:volos+-location:ioannina+-location:heraklion+-location:crete&page=${i}&per_page=100" \
+       -H "Authorization: token ${token}"
+
+    for loca in Athens Thessaloniki Patra Irakleio Larissa Patras Volos \
+                Heraklion Rhodes Rodos Ioannina Chania Chalkis Chalkida Agrinio \
+                Katerini Trikala Serres Lamia Alexandroupoli Kozani Kavala Veria \
+                Athina Hellas Ellada
+
     do
       curl -s "https://api.github.com/search/users?q=repos:%3E4+location:${loca}&page=${i}&per_page=100" \
            -H "Authorization: token ${token}"
